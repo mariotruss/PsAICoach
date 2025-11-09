@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Psy-Coach Companion</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Psy-Coach Companion</h1>
+    <p class="tagline">A supportive AI-inspired mental health companion demo</p>
+  </header>
+  <main>
+    <nav class="tabs" aria-label="Primary">
+      <button class="tab active" data-target="conversation" aria-controls="conversation" aria-selected="true">Conversation</button>
+      <button class="tab" data-target="journal" aria-controls="journal" aria-selected="false">Journal & Mood</button>
+      <button class="tab" data-target="cbt" aria-controls="cbt" aria-selected="false">CBT Toolkit</button>
+      <button class="tab" data-target="reality" aria-controls="reality" aria-selected="false">Reality Check</button>
+      <button class="tab" data-target="dashboard" aria-controls="dashboard" aria-selected="false">Therapist Dashboard</button>
+    </nav>
+
+    <section id="conversation" class="panel active" role="region" aria-labelledby="Conversation">
+      <div class="panel-header">
+        <h2>Conversational Support</h2>
+        <p>Talk through how you are feeling. Psy-Coach responds with grounding questions, reflective prompts, and crisis guidance.</p>
+      </div>
+      <div class="conversation-container">
+        <ul id="conversation-log" class="conversation-log" aria-live="polite"></ul>
+        <form id="conversation-form" class="conversation-form" autocomplete="off">
+          <label for="conversation-input" class="visually-hidden">Share what is on your mind</label>
+          <textarea id="conversation-input" rows="3" placeholder="Share what's on your mind..." required></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+      <aside class="insight-card" aria-live="polite">
+        <h3>Instant Insight</h3>
+        <p id="insight-text">Share a thought to receive a reflection.</p>
+      </aside>
+    </section>
+
+    <section id="journal" class="panel" role="region" aria-labelledby="Journal & Mood">
+      <div class="panel-header">
+        <h2>Journal & Mood Trends</h2>
+        <p>Capture daily reflections and visualize your emotional trajectory.</p>
+      </div>
+      <div class="journal-layout">
+        <article class="journal-entry">
+          <h3>Today's Prompt</h3>
+          <p id="journal-prompt"></p>
+          <textarea id="journal-response" rows="6" placeholder="How would you respond?"></textarea>
+          <button id="journal-save">Save Reflection</button>
+          <p class="saved-feedback" id="journal-feedback" role="status" aria-live="polite"></p>
+        </article>
+        <article class="journal-entry">
+          <h3>Mood Trend (Last 14 Days)</h3>
+          <canvas id="mood-chart" aria-label="Mood trend chart" role="img"></canvas>
+        </article>
+        <article class="journal-entry">
+          <h3>Notable Moments</h3>
+          <ul id="moments-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="cbt" class="panel" role="region" aria-labelledby="CBT Toolkit">
+      <div class="panel-header">
+        <h2>Cognitive-Behavioral Toolkit</h2>
+        <p>Explore cognitive distortions, reframing strategies, and behavioral experiments.</p>
+      </div>
+      <div class="cbt-grid">
+        <article>
+          <h3>Cognitive Distortions</h3>
+          <ul id="distortions-list" class="card-list"></ul>
+        </article>
+        <article>
+          <h3>Reframing Exercises</h3>
+          <ul id="reframes-list" class="card-list"></ul>
+        </article>
+        <article>
+          <h3>Behavioral Experiments</h3>
+          <ul id="experiments-list" class="card-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="reality" class="panel" role="region" aria-labelledby="Reality Check">
+      <div class="panel-header">
+        <h2>Reality Validation Mode</h2>
+        <p>Practice grounding techniques and reality testing when thoughts feel distorted.</p>
+      </div>
+      <div class="reality-grid">
+        <article>
+          <h3>Guided Reality Check</h3>
+          <form id="reality-form" class="reality-form">
+            <label for="reality-scenario">Describe what feels uncertain:</label>
+            <textarea id="reality-scenario" rows="4" placeholder="e.g., I think I heard someone whispering my name." required></textarea>
+            <button type="submit">Evaluate</button>
+          </form>
+          <div id="reality-result" class="result-card" aria-live="polite"></div>
+        </article>
+        <article>
+          <h3>Grounding Toolkit</h3>
+          <ul id="grounding-list" class="card-list"></ul>
+        </article>
+      </div>
+    </section>
+
+    <section id="dashboard" class="panel" role="region" aria-labelledby="Therapist Dashboard">
+      <div class="panel-header">
+        <h2>Therapist Insights</h2>
+        <p>Preview how therapist partners can review progress while keeping patient control front and center.</p>
+      </div>
+      <div class="dashboard-grid">
+        <article>
+          <h3>Mood Snapshot</h3>
+          <ul id="mood-summary" class="metric-list"></ul>
+        </article>
+        <article>
+          <h3>Conversation Highlights</h3>
+          <ul id="highlight-list" class="card-list"></ul>
+        </article>
+        <article>
+          <h3>Alerts & Safety</h3>
+          <ul id="alerts-list" class="card-list"></ul>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Prototype experience for Psy-Coach &mdash; an AI-supported mental health companion.</p>
+    <p class="disclaimer">This demo uses scripted responses and mock data. It is not a medical device.</p>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
