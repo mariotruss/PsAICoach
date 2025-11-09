@@ -1,0 +1,333 @@
+:root {
+  color-scheme: light;
+  --bg: #f6f7fb;
+  --surface: #ffffff;
+  --surface-alt: #f0f3ff;
+  --primary: #5168f6;
+  --primary-dark: #2f3cc9;
+  --accent: #23b5d3;
+  --text: #1f2933;
+  --muted: #5f6c7b;
+  --border: #d9deeb;
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 15px 40px rgba(81, 104, 246, 0.12);
+  font-size: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  background: linear-gradient(180deg, rgba(81, 104, 246, 0.08), rgba(81, 104, 246, 0)) fixed,
+    linear-gradient(120deg, rgba(35, 181, 211, 0.08), rgba(35, 181, 211, 0)) fixed,
+    var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  padding: 2.5rem clamp(1rem, 4vw, 4rem) 1rem;
+  text-align: center;
+}
+
+header h1 {
+  font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem);
+  margin: 0;
+}
+
+.tagline {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
+
+main {
+  flex: 1;
+  padding: 0 clamp(1rem, 4vw, 4rem) 4rem;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 0.75rem;
+  border-radius: var(--radius-lg);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
+}
+
+.tab {
+  border: none;
+  background: transparent;
+  padding: 0.85rem 1.1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--muted);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.tab:hover,
+.tab:focus {
+  outline: none;
+  background: var(--surface-alt);
+  color: var(--primary);
+}
+
+.tab.active {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 12px 25px rgba(81, 104, 246, 0.25);
+}
+
+.panel {
+  display: none;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: var(--radius-lg);
+  padding: clamp(1.5rem, 3vw, 3rem);
+  box-shadow: var(--shadow);
+}
+
+.panel.active {
+  display: block;
+}
+
+.panel-header h2 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.panel-header p {
+  margin-top: 0;
+  color: var(--muted);
+}
+
+.conversation-container {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: inset 0 0 0 1px var(--border);
+  max-height: 420px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.conversation-log {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
+.message {
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 0.75rem;
+  max-width: 80%;
+  line-height: 1.5;
+  position: relative;
+}
+
+.message.user {
+  background: var(--primary);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 6px;
+}
+
+.message.bot {
+  background: var(--surface-alt);
+  color: var(--text);
+  border-bottom-left-radius: 6px;
+}
+
+.message time {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.8);
+  display: block;
+  margin-top: 0.35rem;
+}
+
+.message.bot time {
+  color: rgba(31, 41, 51, 0.5);
+}
+
+.conversation-form {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.conversation-form textarea {
+  resize: vertical;
+  min-height: 90px;
+  padding: 0.85rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.conversation-form button,
+#journal-save,
+.reality-form button {
+  justify-self: end;
+  background: var(--primary);
+  border: none;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 12px 25px rgba(81, 104, 246, 0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.conversation-form button:hover,
+#journal-save:hover,
+.reality-form button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 15px 35px rgba(81, 104, 246, 0.3);
+}
+
+.insight-card {
+  margin-top: 1.5rem;
+  background: var(--surface-alt);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  color: var(--text);
+  box-shadow: inset 0 0 0 1px rgba(81, 104, 246, 0.15);
+}
+
+.journal-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.journal-entry {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+.journal-entry textarea {
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  padding: 0.85rem;
+  font-family: inherit;
+}
+
+.saved-feedback {
+  min-height: 1.2rem;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+#moments-list {
+  padding-left: 1rem;
+}
+
+.card-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.card-list li {
+  background: var(--surface);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 0 0 1px var(--border);
+  line-height: 1.5;
+}
+
+.card-list h4 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+.card-list p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.cbt-grid,
+.reality-grid,
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.result-card {
+  margin-top: 1rem;
+  padding: 1.25rem;
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  box-shadow: inset 0 0 0 1px var(--border);
+  min-height: 140px;
+}
+
+.metric-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+.metric-list li {
+  background: var(--surface);
+  border-left: 4px solid var(--primary);
+  padding: 1rem;
+  border-radius: var(--radius-sm);
+  box-shadow: inset 0 0 0 1px var(--border);
+}
+
+footer {
+  text-align: center;
+  padding: 2rem 1rem 3rem;
+  color: var(--muted);
+}
+
+.disclaimer {
+  font-size: 0.85rem;
+}
+
+.visually-hidden {
+  position: absolute;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  main {
+    padding-bottom: 3rem;
+  }
+
+  .conversation-container {
+    max-height: 360px;
+  }
+}
