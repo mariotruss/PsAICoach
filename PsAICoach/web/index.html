@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>PsAICoSys - AI Support for Psychosis</title>
+  <meta name="description" content="AI companion for managing psychosis and schizophrenia with voice, camera, and AR reality validation" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+  <!-- Crisis Banner (hidden by default) -->
+  <div id="crisis-banner" class="crisis-banner" role="alert" aria-live="assertive" hidden>
+    <div class="crisis-content">
+      <span class="crisis-icon">⚠️</span>
+      <div class="crisis-text">
+        <strong>Emergency Help Available:</strong>
+        <p>Crisis Hotline: 988 (24/7) • Crisis Text Line: Text HOME to 741741 • Emergency: 911</p>
+      </div>
+      <button class="crisis-close" aria-label="Close banner">×</button>
+    </div>
+  </div>
+
+  <!-- Companion Header (Always Visible) -->
+  <header class="companion-header">
+    <div class="companion-status">
+      <div class="companion-avatar">
+        <div class="avatar-pulse"></div>
+        <span class="avatar-icon"><i class="fas fa-brain"></i></span>
+      </div>
+      <div class="companion-info">
+        <h1>PsAICoSys</h1>
+        <p class="status-text">Reality validation & support</p>
+      </div>
+    </div>
+    <button class="settings-btn" aria-label="Settings">
+      <i class="fas fa-cog"></i>
+    </button>
+  </header>
+
+  <main class="companion-main">
+    <!-- Main Conversation View (Always Central) -->
+    <section id="conversation" class="companion-section active" role="main" aria-label="Conversation with companion">
+      <div class="conversation-container">
+        <ul id="conversation-log" class="conversation-log" aria-live="polite" aria-relevant="additions"></ul>
+      </div>
+      
+      <!-- Quick Capture Bar -->
+      <div class="capture-bar">
+        <button class="capture-btn" id="capture-photo" aria-label="Take photo" title="Capture moment">
+          <span class="capture-icon"><i class="fas fa-camera"></i></span>
+        </button>
+        <button class="capture-btn" id="capture-video" aria-label="Record video with AR" title="Reality check video">
+          <span class="capture-icon"><i class="fas fa-video"></i></span>
+        </button>
+        <button class="capture-btn voice-btn" id="voice-toggle" aria-label="Voice input" title="Speak to companion">
+          <span class="capture-icon"><i class="fas fa-microphone"></i></span>
+          <span class="pulse-ring"></span>
+        </button>
+      </div>
+
+      <!-- Message Input -->
+      <form id="conversation-form" class="conversation-form" autocomplete="off">
+        <div class="input-container">
+          <textarea 
+            id="conversation-input" 
+            rows="1" 
+            placeholder="Message PsyCoach..." 
+            aria-label="Type your message"
+          ></textarea>
+          <button type="submit" class="send-btn" aria-label="Send message">
+            <i class="fas fa-paper-plane"></i>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Journal Section -->
+    <section id="journal" class="companion-section" role="region" aria-label="Journal">
+      <div class="section-header">
+        <h2><i class="fas fa-book-open" style="margin-right: 8px;"></i> Journal</h2>
+      </div>
+      <div class="journal-content">
+        <div class="journal-card">
+          <p id="journal-prompt" class="journal-prompt-text">How are you feeling today?</p>
+          <textarea 
+            id="journal-response" 
+            rows="5" 
+            placeholder="Write about your day, thoughts, or feelings..."
+            aria-label="Journal entry"
+          ></textarea>
+          <div class="journal-actions">
+            <button id="journal-save" class="btn-primary">
+              <i class="fas fa-check"></i> Save
+            </button>
+          </div>
+          <p class="saved-feedback" id="journal-feedback" role="status" aria-live="polite"></p>
+        </div>
+        
+        <div class="mood-card">
+          <h3>📈 Mood Trend</h3>
+          <canvas id="mood-chart" aria-label="Mood trend over the last 14 days" role="img"></canvas>
+        </div>
+        
+        <div class="moments-card">
+          <h3>⭐ Recent Moments</h3>
+          <ul id="moments-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tools Section -->
+    <section id="tools" class="companion-section" role="region" aria-label="Wellbeing Tools">
+      <div class="section-header">
+        <h2><i class="fas fa-tools" style="margin-right: 8px;"></i> Tools</h2>
+      </div>
+      <div class="tools-grid">
+        <div class="tool-card" id="reality-check-card">
+          <div class="tool-icon"><i class="fas fa-eye"></i></div>
+          <h3>Reality Check</h3>
+          <p>Validate experiences with AR support</p>
+        </div>
+        <div class="tool-card" id="grounding-card">
+          <div class="tool-icon"><i class="fas fa-anchor"></i></div>
+          <h3>Grounding</h3>
+          <p>5-4-3-2-1 and breathing exercises</p>
+        </div>
+        <div class="tool-card" id="cbt-card">
+          <div class="tool-icon"><i class="fas fa-lightbulb"></i></div>
+          <h3>CBT Toolkit</h3>
+          <p>Reframe distorted thinking</p>
+        </div>
+        <div class="tool-card" id="mood-card">
+          <div class="tool-icon"><i class="fas fa-smile"></i></div>
+          <h3>Mood Check</h3>
+          <p>Track how you're feeling</p>
+        </div>
+      </div>
+      
+      <!-- Reality Check Modal Content -->
+      <div id="reality-modal" class="tool-modal" hidden>
+        <div class="modal-header">
+          <h3><i class="fas fa-eye" style="margin-right: 8px;"></i> Reality Check</h3>
+          <button class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <form id="reality-form" class="reality-form">
+          <label for="reality-scenario">What feels uncertain?</label>
+          <textarea 
+            id="reality-scenario" 
+            rows="4" 
+            placeholder="Describe what you're experiencing..."
+            required
+          ></textarea>
+          <button type="submit" class="btn-primary">Analyze</button>
+        </form>
+        <div id="reality-result" class="result-card" aria-live="polite"></div>
+      </div>
+      
+      <!-- Grounding Modal Content -->
+      <div id="grounding-modal" class="tool-modal" hidden>
+        <div class="modal-header">
+          <h3><i class="fas fa-anchor" style="margin-right: 8px;"></i> Grounding Techniques</h3>
+          <button class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <ul id="grounding-list" class="technique-list"></ul>
+      </div>
+      
+      <!-- CBT Modal Content -->
+      <div id="cbt-modal" class="tool-modal" hidden>
+        <div class="modal-header">
+          <h3><i class="fas fa-lightbulb" style="margin-right: 8px;"></i> CBT Toolkit</h3>
+          <button class="modal-close" aria-label="Close"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="cbt-content">
+          <h4>Common Distortions</h4>
+          <ul id="distortions-list" class="technique-list"></ul>
+          <h4>Reframing Tips</h4>
+          <ul id="reframes-list" class="technique-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Insights Section -->
+    <section id="insights" class="companion-section" role="region" aria-label="Insights">
+      <div class="section-header">
+        <h2><i class="fas fa-chart-bar" style="margin-right: 8px;"></i> Insights</h2>
+      </div>
+      <div class="insights-grid">
+        <div class="insight-card">
+          <h3>Mood Summary</h3>
+          <ul id="mood-summary" class="metric-list"></ul>
+        </div>
+        <div class="insight-card">
+          <h3>Conversation Themes</h3>
+          <ul id="highlight-list" class="theme-list"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav class="bottom-nav" role="navigation" aria-label="Main navigation">
+    <button class="nav-btn active" data-section="conversation" aria-label="Conversation">
+      <span class="nav-icon"><i class="fas fa-comments"></i></span>
+      <span class="nav-label">Chat</span>
+    </button>
+    <button class="nav-btn" data-section="journal" aria-label="Journal">
+      <span class="nav-icon"><i class="fas fa-book-open"></i></span>
+      <span class="nav-label">Journal</span>
+    </button>
+    <button class="nav-btn" data-section="tools" aria-label="Tools">
+      <span class="nav-icon"><i class="fas fa-tools"></i></span>
+      <span class="nav-label">Tools</span>
+    </button>
+    <button class="nav-btn" data-section="insights" aria-label="Insights">
+      <span class="nav-icon"><i class="fas fa-chart-line"></i></span>
+      <span class="nav-label">Insights</span>
+    </button>
+  </nav>
+
+  <!-- Camera/Video Modal -->
+  <div id="camera-modal" class="camera-modal" hidden>
+    <div class="camera-container">
+      <div class="camera-header">
+        <h3 id="camera-title">Capture Moment</h3>
+        <button class="camera-close" aria-label="Close camera"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="camera-viewport">
+        <video id="camera-preview" autoplay playsinline></video>
+        <canvas id="camera-canvas" hidden></canvas>
+        
+        <!-- AR Overlay for Reality Check -->
+        <div id="ar-overlay" class="ar-overlay" hidden>
+          <div class="ar-grid"></div>
+          <div class="ar-indicator reality-check">
+            <span class="ar-icon">✓</span>
+            <span class="ar-text">Reality Check Active</span>
+          </div>
+          <div class="ar-timestamp"></div>
+        </div>
+      </div>
+      <div class="camera-controls">
+        <button id="camera-capture" class="capture-action-btn">
+          <span class="action-icon">📷</span>
+          <span class="action-text">Capture</span>
+        </button>
+        <button id="camera-switch" class="camera-switch-btn" aria-label="Switch camera">
+          <i class="fas fa-sync-alt"></i>
+        </button>
+      </div>
+      <div id="captured-media" class="captured-media" hidden>
+        <img id="captured-image" alt="Captured moment" />
+        <div class="media-actions">
+          <button id="save-media" class="btn-primary">Save & Share with PsyCoach</button>
+          <button id="retake-media" class="btn-secondary">Retake</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Container -->
+  <div id="notification-container" aria-live="polite" aria-atomic="true"></div>
+
+  <script type="module" src="./data.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

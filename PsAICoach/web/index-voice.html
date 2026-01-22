@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PsyCoach - Voice Mental Health Companion</title>
+  <meta name="description" content="Voice-first mental health support with AI companion" />
+  <link rel="stylesheet" href="styles-voice.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="app-logo">🧠</div>
+      <h1 class="app-title">PsyCoach</h1>
+      <p class="app-subtitle">Your Voice Mental Health Companion</p>
+    </header>
+
+    <!-- Main Voice Interface -->
+    <main class="voice-interface" id="main-interface">
+      
+      <!-- Voice Visualizer -->
+      <section class="voice-visualizer">
+        <div class="voice-orb-container">
+          <button class="voice-orb" id="voice-orb" aria-label="Tap to speak">
+            <span class="voice-orb-icon" id="orb-icon">🎙️</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Transcript/Message Display -->
+      <section class="transcript-container" id="transcript-container">
+        <div class="transcript-label" id="transcript-label">Tap the microphone to start</div>
+        <div class="transcript-text" id="transcript-text"></div>
+      </section>
+
+      <!-- Quick Action Options -->
+      <section class="action-cards" id="action-cards">
+        <!-- Dynamically populated -->
+      </section>
+
+      <!-- Voice Controls -->
+      <section class="voice-controls">
+        <button class="voice-btn" id="mute-btn" aria-label="Mute" title="Mute">
+          <span>🔇</span>
+        </button>
+        <button class="voice-btn primary" id="main-voice-btn" aria-label="Start conversation" title="Speak">
+          <span>🎤</span>
+        </button>
+        <button class="voice-btn" id="settings-btn" aria-label="Settings" title="Settings">
+          <span>⚙️</span>
+        </button>
+      </section>
+
+    </main>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-view="voice">
+        <span>🎤</span> Voice
+      </button>
+      <button class="nav-tab" data-view="history">
+        <span>💬</span> History
+      </button>
+      <button class="nav-tab" data-view="journal">
+        <span>📔</span> Journal
+      </button>
+      <button class="nav-tab" data-view="tools">
+        <span>🧩</span> Tools
+      </button>
+      <button class="nav-tab" data-view="insights">
+        <span>📊</span> Insights
+      </button>
+    </nav>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+      <p class="status-text" id="status-text">Ready to listen</p>
+    </div>
+
+  </div>
+
+  <!-- Settings Modal (Hidden by default) -->
+  <div id="settings-modal" class="modal" style="display: none;">
+    <div class="modal-content settings-panel">
+      <h2>Voice Settings</h2>
+      
+      <div class="setting-group">
+        <label class="setting-label" for="voice-select">Voice</label>
+        <select id="voice-select" class="setting-control">
+          <option>Loading voices...</option>
+        </select>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="rate-slider">Speech Rate</label>
+        <div class="setting-control">
+          <input type="range" id="rate-slider" class="slider" min="0.5" max="2" step="0.1" value="0.95">
+          <span id="rate-value">0.95x</span>
+        </div>
+      </div>
+
+      <div class="setting-group">
+        <label class="setting-label" for="pitch-slider">Pitch</label>
+        <div class="setting-control">
+          <input type="range" id="pitch-slider" class="slider" min="0.5" max="2" step="0.1" value="1.0">
+          <span id="pitch-value">1.0</span>
+        </div>
+      </div>
+
+      <button class="voice-btn primary" onclick="closeSettings()">Close</button>
+    </div>
+  </div>
+
+  <script type="module" src="./app-voice.js"></script>
+</body>
+</html>
+
